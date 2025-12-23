@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechSpecs Manager</title>
+  <link rel="stylesheet" href="./styles/style.css" />
+</head>
+<body>
+
+  <h1>TechSpecs Manager</h1>
+
+  <div class="main-container">
+
+    <!-- Formulario a la izquierda -->
+    <div class="form-section">
+      <form action="submit">
+        <label for="serverName">Nombre del servidor:</label>
+        <input type="text" name="serverName" id="serverName" />
+
+        <label for="cpu">CPU (Min. 2 núcleos):</label>
+        <input type="number" name="cpu" id="cpu" />
+
+        <label for="ram">RAM (Min. 4 GB):</label>
+        <input type="number" name="ram" id="ram" />
+
+        <label for="storage">Almacenamiento (SSD/HDD):</label>
+        <select name="storage" id="storage">
+          <option value="SSD">SSD</option>
+          <option value="HDD">HDD</option>
+        </select>
+
+        <button>Enviar</button>
+      </form>
+    </div>
+
+    <!-- Lista de tarjetas a la derecha -->
+    <div class="list-section">
+      <h2>Lista de PCs</h2>
+      <div id="lista-pcs"></div>
+    </div>
+
+  </div>
+
+  <script src="./scripts/script.js"></script>
+</body>
+</html>

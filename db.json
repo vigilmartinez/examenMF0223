@@ -1,0 +1,12 @@
+{
+    "computers": [
+      {
+        "id": 1,
+        "serverName": "Klaatu",
+        "CPU": 32,
+        "RAM": 16,
+        "storage":"SSD",
+        "price":3
+      }
+    ]
+  }

@@ -5,11 +5,11 @@ const API_URL = 'https://694a53e31282f890d2d854bb.mockapi.io/pcExamen';
 
 let computers = [];
 
-// Función para calcular el precio (3€ por núcleo CPU + 5€ por GB RAM)
+// Calcular el precio
 function calcularPrecio(cpu, ram) {
-  const cpuNum = parseInt(cpu) || 0;
-  const ramNum = parseInt(ram) || 0;
-  return (cpuNum * 3) + (ramNum * 5);
+    const cpuNum = parseInt(cpu, 10);
+    const ramNum = parseInt(ram, 10);
+    return cpuNum * 13 + ramNum * 5; 
 }
 
 // Cargar todos los PCs desde la API
@@ -19,12 +19,10 @@ async function cargarComputers() {
     if (!response.ok) throw new Error('Error al cargar los datos');
     computers = await response.json();
 
-    // Si algún PC no tiene precio (por si lo agregaste manualmente antes), lo calculamos
+    // Si algún PC no tiene precio
     computers = computers.map(pc => {
-      if (!pc.price) {
         pc.price = calcularPrecio(pc.CPU, pc.RAM);
-      }
-      return pc;
+        return pc;
     });
 
     mostrarLista();
@@ -34,7 +32,7 @@ async function cargarComputers() {
   }
 }
 
-// Mostrar la lista como tarjetas (igual que antes, pero más bonito)
+// Mostrar tarjetas
 function mostrarLista() {
   lista.innerHTML = '';
 
@@ -55,13 +53,13 @@ function mostrarLista() {
         <p><strong>Almacenamiento:</strong> ${pc.storage}</p>
         <p class="pc-price"><strong>Precio:</strong> ${pc.price}€</p>
       </div>
-        <button class="btn-delete" data-id="${pc.id}"></button>
+        <button class="btn-delete" data-id="${pc.id}">X</button>
     `;
 
     lista.appendChild(tarjeta);
   });
 
-  // Añadir eventos a los botones de eliminar
+  // eventos de eliminar
   document.querySelectorAll('.btn-delete').forEach(btn => {
     btn.addEventListener('click', eliminarPC);
   });
@@ -70,7 +68,6 @@ function mostrarLista() {
 // Agregar un nuevo PC
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
-
   const serverName = document.getElementById('serverName').value.trim();
   const cpu = document.getElementById('cpu').value;
   const ram = document.getElementById('ram').value;
@@ -81,8 +78,8 @@ form.addEventListener('submit', async function(e) {
     return;
   }
 
-  const cpuNum = parseInt(cpu);
-  const ramNum = parseInt(ram);
+  const cpuNum = parseInt(cpu, 10);
+  const ramNum = parseInt(ram, 10);
 
   if (cpuNum < 2 || ramNum < 4) {
     alert('CPU mínimo 2 núcleos y RAM mínima 4 GB.');
@@ -91,10 +88,15 @@ form.addEventListener('submit', async function(e) {
 
   const precio = calcularPrecio(cpuNum, ramNum);
 
+  if(precio>=700){
+    alert('Precio supera 700€');
+    return;
+  }
+
   const nuevoPC = {
     serverName,
-    CPU: cpu,
-    RAM: ram,
+    CPU: cpuNum,
+    RAM: ramNum,
     storage,
     price: precio
   };
